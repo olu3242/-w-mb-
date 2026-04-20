@@ -12,19 +12,19 @@
     "db:reset": "supabase db reset"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^5",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2",
+    "clsx": "^2",
     "next": "16.2.4",
+    "qrcode.react": "^4",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "@supabase/supabase-js": "^2",
-    "@supabase/ssr": "^0.5",
-    "stripe": "^17",
-    "@stripe/stripe-js": "^5",
     "resend": "^4",
-    "zustand": "^5",
-    "zod": "^3",
-    "clsx": "^2",
+    "stripe": "^17",
     "tailwind-merge": "^2",
-    "qrcode.react": "^4"
+    "zod": "^3",
+    "zustand": "^5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

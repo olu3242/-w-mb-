@@ -18,8 +18,35 @@ export type Database = {
           created_at: string
           updated_at: string
         }
-        Insert: Omit<Database['public']['Tables']['events']['Row'], 'id' | 'created_at' | 'updated_at'>
-        Update: Partial<Database['public']['Tables']['events']['Insert']>
+        Insert: {
+          id?: string
+          slug: string
+          title: string
+          description?: string | null
+          event_date?: string | null
+          location?: string | null
+          is_public?: boolean
+          signals?: Json
+          owner_id: string
+          stripe_account_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          slug?: string
+          title?: string
+          description?: string | null
+          event_date?: string | null
+          location?: string | null
+          is_public?: boolean
+          signals?: Json
+          owner_id?: string
+          stripe_account_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       gift_items: {
         Row: {
@@ -31,8 +58,25 @@ export type Database = {
           is_funded: boolean
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['gift_items']['Row'], 'id' | 'created_at'>
-        Update: Partial<Database['public']['Tables']['gift_items']['Insert']>
+        Insert: {
+          id?: string
+          event_id: string
+          title: string
+          description?: string | null
+          amount: number
+          is_funded?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          title?: string
+          description?: string | null
+          amount?: number
+          is_funded?: boolean
+          created_at?: string
+        }
+        Relationships: []
       }
       contributions: {
         Row: {
@@ -47,8 +91,31 @@ export type Database = {
           status: string
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['contributions']['Row'], 'id' | 'created_at'>
-        Update: Partial<Database['public']['Tables']['contributions']['Insert']>
+        Insert: {
+          id?: string
+          event_id: string
+          gift_item_id?: string | null
+          amount: number
+          contributor_name: string
+          contributor_email: string
+          message?: string | null
+          stripe_payment_intent_id: string
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          gift_item_id?: string | null
+          amount?: number
+          contributor_name?: string
+          contributor_email?: string
+          message?: string | null
+          stripe_payment_intent_id?: string
+          status?: string
+          created_at?: string
+        }
+        Relationships: []
       }
       tasks: {
         Row: {
@@ -60,8 +127,25 @@ export type Database = {
           status: string
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['tasks']['Row'], 'id' | 'created_at'>
-        Update: Partial<Database['public']['Tables']['tasks']['Insert']>
+        Insert: {
+          id?: string
+          event_id: string
+          title: string
+          assigned_to?: string | null
+          due_date?: string | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          title?: string
+          assigned_to?: string | null
+          due_date?: string | null
+          status?: string
+          created_at?: string
+        }
+        Relationships: []
       }
       vendors: {
         Row: {
@@ -74,8 +158,27 @@ export type Database = {
           status: string
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['vendors']['Row'], 'id' | 'created_at'>
-        Update: Partial<Database['public']['Tables']['vendors']['Insert']>
+        Insert: {
+          id?: string
+          event_id: string
+          name: string
+          category: string
+          contact?: string | null
+          cost?: number | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          name?: string
+          category?: string
+          contact?: string | null
+          cost?: number | null
+          status?: string
+          created_at?: string
+        }
+        Relationships: []
       }
       budget_lines: {
         Row: {
@@ -87,12 +190,30 @@ export type Database = {
           actual: number | null
           created_at: string
         }
-        Insert: Omit<Database['public']['Tables']['budget_lines']['Row'], 'id' | 'created_at'>
-        Update: Partial<Database['public']['Tables']['budget_lines']['Insert']>
+        Insert: {
+          id?: string
+          event_id: string
+          category: string
+          label: string
+          estimated: number
+          actual?: number | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          category?: string
+          label?: string
+          estimated?: number
+          actual?: number | null
+          created_at?: string
+        }
+        Relationships: []
       }
     }
-    Views: Record<string, never>
-    Functions: Record<string, never>
-    Enums: Record<string, never>
+    Views: { [_ in never]: never }
+    Functions: { [_ in never]: never }
+    Enums: { [_ in never]: never }
+    CompositeTypes: { [_ in never]: never }
   }
 }

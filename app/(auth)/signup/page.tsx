@@ -1,0 +1,73 @@
+'use client'
+
+import { useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+
+export default function SignupPage() {
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    const supabase = createClient()
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard` },
+    })
+    if (error) {
+      setError(error.message)
+      setLoading(false)
+    } else {
+      router.push('/dashboard')
+      router.refresh()
+    }
+  }
+
+  return (
+    <div className="flex flex-col gap-6">
+      <div>
+        <h1 className="font-display text-2xl font-bold text-pulse">Ówàmbẹ̀</h1>
+        <p className="mt-1 text-sm text-foreground/60">Create your account</p>
+      </div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          required
+          className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-pulse/60"
+        />
+        <input
+          type="password"
+          placeholder="Password (min 8 chars)"
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          required
+          minLength={8}
+          className="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm outline-none focus:border-pulse/60"
+        />
+        {error && <p className="text-sm text-red-400">{error}</p>}
+        <button
+          type="submit"
+          disabled={loading}
+          className="rounded-lg bg-pulse py-3 font-semibold text-void transition-opacity disabled:opacity-50"
+        >
+          {loading ? 'Creating account…' : 'Get started'}
+        </button>
+      </form>
+      <p className="text-center text-sm text-foreground/60">
+        Have an account?{' '}
+        <Link href="/login" className="text-pulse hover:underline">Sign in</Link>
+      </p>
+    </div>
+  )
+}
