@@ -1,120 +1,36 @@
-# -w-mb-
-Ówàmbẹ̀, Wherever it's happening
-# Ówàmbẹ̀ — Give. Plan. Celebrate.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Unified platform for gifting, planning, and executing any occasion.
+## Getting Started
 
-## Stack
-- Next.js 15 App Router + TypeScript
-- Supabase (Postgres + RLS + Realtime + Storage)
-- Stripe Connect Express
-- Tailwind CSS
-- Resend (email)
-- Zustand (state)
-- Vercel (deploy)
+First, run the development server:
 
-## Adaptive Signal System
-Events carry a `signals` JSONB column. Features unlock as signals activate:
-
-| Signal | Unlocks |
-|---|---|
-| `has_contributions` | Gift registry + Stripe payouts |
-| `has_venue` | Venue tools |
-| `has_vendors` | Vendor hub |
-| `has_tasks` | Task board |
-| `has_timeline` | Execution timeline |
-| `has_budget_profile` | Budget engine |
-
-## Setup
 ```bash
-cp .env.example .env.local    # fill all vars
-npm install
-supabase start
-supabase db reset              # applies 001_schema + 002_rls
-npm run dev                    # http://localhost:3000
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## Env Vars
-```
-NEXT_PUBLIC_SUPABASE_URL
-NEXT_PUBLIC_SUPABASE_ANON_KEY
-SUPABASE_SERVICE_ROLE_KEY
-STRIPE_SECRET_KEY
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-STRIPE_WEBHOOK_SECRET
-RESEND_API_KEY
-NEXT_PUBLIC_APP_URL
-```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## File Structure
-```
-app/
-  page.tsx                     → Landing page
-  (auth)/login|signup          → Auth pages
-  (dashboard)/
-    dashboard/                 → Home + stats
-    events/                    → Event list
-    events/new/                → Creation wizard (2-step)
-    events/[slug]/             → Event hub
-      gifts/                   → Registry + contributions
-      tasks/                   → Task board
-      budget/                  → Budget engine
-      vendors/                 → Vendor hub
-  e/[slug]/                    → Public guest page
-  api/
-    events/                    → CRUD
-    contributions/             → Accept gifts
-    webhooks/stripe/           → Stripe events
-    stripe/connect/            → Onboarding
-    auth/signout/              → Sign out
-components/
-  ui/                          → button, input, card, badge, modal, select
-  layout/                      → nav, sidebar, mobile-nav
-  events/                      → event-card, signal-badges
-  gifts/                       → contribution-form
-  shared/                      → empty-state, avatar, qr-code
-lib/
-  supabase/client|server|middleware
-  stripe/client
-  resend/client
-  utils.ts                     → cn, formatCurrency, generateSlug
-  validations.ts               → Zod schemas
-stores/
-  event-store.ts
-  auth-store.ts
-types/
-  index.ts
-  database.ts
-supabase/migrations/
-  001_schema.sql
-  002_rls.sql
-.claude/
-  agents/arch.md|ux.md|gtm.md
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Scripts
-```bash
-npm run dev          # local dev
-npm run build        # production
-npm run typecheck    # tsc --noEmit
-npm run db:types     # regenerate types/database.ts
-npm run db:reset     # reset local Supabase
-```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Breakpoints
-- Desktop: 1024px+
-- Tablet: 768–1024px
-- Mobile: <768px
+## Learn More
 
-## Design Tokens
-```
-void:    #080808  bg
-pulse:   #e8a44a  primary CTA
-sage:    #4caf7d  money/success
-ocean:   #4a8fe8  links/info
-```
-Fonts: Syne (display) · Instrument Sans (body) · JetBrains Mono (mono)
+To learn more about Next.js, take a look at the following resources:
 
-## Claude Code
-CLAUDE.md is pre-configured with full project context.
-Sub-agents: `@arch` `@ux` `@gtm`
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
