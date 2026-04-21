@@ -229,6 +229,9 @@ export type Database = {
           guest_count: number
           style_tier: string
           location_type: string
+          location_area: string
+          event_type: string
+          face_priority: boolean
           hero_element: string
           budget_ceiling: number | null
           event_month: number | null
@@ -243,6 +246,9 @@ export type Database = {
           guest_count?: number
           style_tier?: string
           location_type?: string
+          location_area?: string
+          event_type?: string
+          face_priority?: boolean
           hero_element?: string
           budget_ceiling?: number | null
           event_month?: number | null
@@ -257,6 +263,9 @@ export type Database = {
           guest_count?: number
           style_tier?: string
           location_type?: string
+          location_area?: string
+          event_type?: string
+          face_priority?: boolean
           hero_element?: string
           budget_ceiling?: number | null
           event_month?: number | null
@@ -276,6 +285,7 @@ export type Database = {
           final_total: number | null
           demand_multiplier: number | null
           allocations: Json
+          ave_data: Json
           generated_at: string
         }
         Insert: {
@@ -286,6 +296,7 @@ export type Database = {
           final_total?: number | null
           demand_multiplier?: number | null
           allocations?: Json
+          ave_data?: Json
           generated_at?: string
         }
         Update: {
@@ -296,6 +307,7 @@ export type Database = {
           final_total?: number | null
           demand_multiplier?: number | null
           allocations?: Json
+          ave_data?: Json
           generated_at?: string
         }
         Relationships: []
@@ -417,6 +429,173 @@ export type Database = {
         }
         Relationships: []
       }
+      vendor_scores: {
+        Row: {
+          id: string
+          vendor_id: string
+          event_id: string
+          punctuality_score: number
+          quality_score: number
+          reliability_score: number
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          vendor_id: string
+          event_id: string
+          punctuality_score: number
+          quality_score: number
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          vendor_id?: string
+          event_id?: string
+          punctuality_score?: number
+          quality_score?: number
+          notes?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      client_preferences: {
+        Row: {
+          id: string
+          owner_id: string
+          face_priority: boolean
+          disliked_categories: string[]
+          budget_style: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          owner_id: string
+          face_priority?: boolean
+          disliked_categories?: string[]
+          budget_style?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          owner_id?: string
+          face_priority?: boolean
+          disliked_categories?: string[]
+          budget_style?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      event_inventory: {
+        Row: {
+          id: string
+          event_id: string
+          item_name: string
+          facet: string
+          total_qty: number
+          store_qty: number
+          floor_qty: number
+          unit_cost_kobo: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          item_name: string
+          facet: string
+          total_qty?: number
+          store_qty?: number
+          floor_qty?: number
+          unit_cost_kobo?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          item_name?: string
+          facet?: string
+          total_qty?: number
+          store_qty?: number
+          floor_qty?: number
+          unit_cost_kobo?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      vendor_crew: {
+        Row: {
+          id: string
+          event_id: string
+          vendor_id: string | null
+          crew_name: string
+          plate_number: string | null
+          crew_id_verified: boolean
+          fuel_audited: boolean
+          high_scrutiny: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          vendor_id?: string | null
+          crew_name: string
+          plate_number?: string | null
+          crew_id_verified?: boolean
+          fuel_audited?: boolean
+          high_scrutiny?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          vendor_id?: string | null
+          crew_name?: string
+          plate_number?: string | null
+          crew_id_verified?: boolean
+          fuel_audited?: boolean
+          high_scrutiny?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      guest_experience_scores: {
+        Row: {
+          id: string
+          event_id: string
+          ac_score: number | null
+          service_speed_score: number | null
+          bathroom_score: number | null
+          overall_score: number | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          ac_score?: number | null
+          service_speed_score?: number | null
+          bathroom_score?: number | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          ac_score?: number | null
+          service_speed_score?: number | null
+          bathroom_score?: number | null
+          notes?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: { [_ in never]: never }
     Functions: {
@@ -425,6 +604,7 @@ export type Database = {
           p_guest_count: number
           p_style_tier: string
           p_location_type: string
+          p_location_area?: string
           p_budget_ceiling?: number | null
           p_event_month?: number | null
           p_event_dow?: number | null
@@ -432,7 +612,11 @@ export type Database = {
         Returns: Json
       }
       get_facet_allocations: {
-        Args: { p_style_tier: string; p_hero_element?: string }
+        Args: {
+          p_style_tier: string
+          p_hero_element?: string
+          p_crisis_deficit_pct?: number
+        }
         Returns: Json
       }
       update_event_signal: {

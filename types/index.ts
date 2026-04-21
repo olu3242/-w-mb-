@@ -82,12 +82,18 @@ export type BudgetLine = {
   created_at: string
 }
 
+export type LocationArea = 'premium' | 'urban' | 'state_capital' | 'other'
+export type EventType = 'wedding' | 'funeral' | 'birthday' | 'corporate' | 'naming' | 'party'
+
 export type EventContext = {
   id: string
   event_id: string
   guest_count: number
   style_tier: 'intimate' | 'standard' | 'premium' | 'luxury'
   location_type: 'indoor' | 'outdoor' | 'hybrid'
+  location_area: LocationArea
+  event_type: EventType
+  face_priority: boolean
   hero_element: string
   budget_ceiling?: number | null
   event_month?: number | null
@@ -104,7 +110,10 @@ export type EventFacets = {
   raw_total: number
   final_total: number
   demand_multiplier: number
+  area_multiplier?: number | null
+  inflation_buffer?: number | null
   allocations: Record<string, number>
+  ave_data: Record<string, { allocated: number; actual: number }>
   generated_at: string
 }
 
@@ -135,5 +144,62 @@ export type VendorInvite = {
   name?: string | null
   status: 'pending' | 'accepted' | 'declined'
   token: string
+  created_at: string
+}
+
+export type VendorScore = {
+  id: string
+  vendor_id: string
+  event_id: string
+  punctuality_score: number
+  quality_score: number
+  reliability_score: number
+  notes?: string | null
+  created_at: string
+}
+
+export type ClientPreference = {
+  id: string
+  owner_id: string
+  face_priority: boolean
+  disliked_categories: string[]
+  budget_style: 'tight' | 'balanced' | 'lavish'
+  created_at: string
+  updated_at: string
+}
+
+export type EventInventory = {
+  id: string
+  event_id: string
+  item_name: string
+  facet: string
+  total_qty: number
+  store_qty: number
+  floor_qty: number
+  unit_cost_kobo: number
+  created_at: string
+  updated_at: string
+}
+
+export type VendorCrew = {
+  id: string
+  event_id: string
+  vendor_id?: string | null
+  crew_name: string
+  plate_number?: string | null
+  crew_id_verified: boolean
+  fuel_audited: boolean
+  high_scrutiny: boolean
+  created_at: string
+}
+
+export type GuestExperienceScore = {
+  id: string
+  event_id: string
+  ac_score?: number | null
+  service_speed_score?: number | null
+  bathroom_score?: number | null
+  overall_score?: number | null
+  notes?: string | null
   created_at: string
 }
