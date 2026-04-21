@@ -5,6 +5,9 @@ export type EventSignals = {
   has_tasks?: boolean
   has_timeline?: boolean
   has_budget_profile?: boolean
+  alice_calibrated?: boolean
+  alice_budget_generated?: boolean
+  [key: string]: boolean | undefined
 }
 
 export type Event = {
@@ -18,6 +21,9 @@ export type Event = {
   signals: EventSignals
   owner_id: string
   stripe_account_id?: string
+  alice_unlocked: boolean
+  alice_paid_at?: string
+  alice_payment_ref?: string
   created_at: string
   updated_at: string
 }
@@ -73,5 +79,61 @@ export type BudgetLine = {
   label: string
   estimated: number
   actual?: number
+  created_at: string
+}
+
+export type EventContext = {
+  id: string
+  event_id: string
+  guest_count: number
+  style_tier: 'intimate' | 'standard' | 'premium' | 'luxury'
+  location_type: 'indoor' | 'outdoor' | 'hybrid'
+  hero_element: string
+  budget_ceiling?: number | null
+  event_month?: number | null
+  event_dow?: number | null
+  raw_notes?: string | null
+  created_at: string
+  updated_at: string
+}
+
+export type EventFacets = {
+  id: string
+  event_id: string
+  context_id?: string | null
+  raw_total: number
+  final_total: number
+  demand_multiplier: number
+  allocations: Record<string, number>
+  generated_at: string
+}
+
+export type AliceAlert = {
+  id: string
+  event_id: string
+  alert_type: string
+  severity: 'info' | 'warning' | 'critical'
+  message: string
+  resolved: boolean
+  created_at: string
+}
+
+export type AliceDecision = {
+  id: string
+  event_id: string
+  decision_type: string
+  payload: Record<string, unknown>
+  accepted?: boolean | null
+  created_at: string
+}
+
+export type VendorInvite = {
+  id: string
+  event_id: string
+  vendor_id?: string | null
+  email: string
+  name?: string | null
+  status: 'pending' | 'accepted' | 'declined'
+  token: string
   created_at: string
 }

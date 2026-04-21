@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { AliceUnlockCard } from '@/components/alice/alice-unlock-card'
 import type { Event } from '@/types'
 
 const TABS = [
@@ -9,6 +10,7 @@ const TABS = [
   { href: '/tasks', label: 'Tasks', signal: 'has_tasks' },
   { href: '/budget', label: 'Budget', signal: 'has_budget_profile' },
   { href: '/vendors', label: 'Vendors', signal: 'has_vendors' },
+  { href: '/alice', label: '🧠 ALICE', aliceOnly: true },
 ]
 
 export default async function EventHubPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -26,7 +28,11 @@ export default async function EventHubPage({ params }: { params: Promise<{ slug:
   const signals = ev.signals ?? {}
   const base = `/events/${slug}`
 
-  const visibleTabs = TABS.filter(t => !t.signal || signals[t.signal as keyof typeof signals])
+  const visibleTabs = TABS.filter(t => {
+    if (t.aliceOnly) return ev.alice_unlocked
+    if (t.signal) return !!signals[t.signal as keyof typeof signals]
+    return true
+  })
 
   return (
     <div className="flex flex-col gap-6">
@@ -40,14 +46,22 @@ export default async function EventHubPage({ params }: { params: Promise<{ slug:
           )}
           {ev.location && <p className="text-sm text-foreground/40">{ev.location}</p>}
         </div>
-        {ev.is_public && (
+        <div className="flex shrink-0 items-center gap-2">
+          {ev.is_public && (
+            <Link
+              href={`/e/${slug}`}
+              className="rounded-lg border border-ocean/30 px-3 py-1.5 text-xs text-ocean hover:bg-ocean/10 transition-colors"
+            >
+              Guest page →
+            </Link>
+          )}
           <Link
-            href={`/e/${slug}`}
-            className="shrink-0 rounded-lg border border-ocean/30 px-3 py-1.5 text-xs text-ocean hover:bg-ocean/10 transition-colors"
+            href={`/events/${slug}/edit`}
+            className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-foreground/50 hover:border-white/20 hover:text-foreground transition-colors"
           >
-            Guest page →
+            Edit
           </Link>
-        )}
+        </div>
       </div>
 
       <div className="flex gap-1 border-b border-white/5">
@@ -75,6 +89,10 @@ export default async function EventHubPage({ params }: { params: Promise<{ slug:
             </div>
           ))}
       </div>
+
+      {!ev.alice_unlocked && (
+        <AliceUnlockCard eventId={ev.id} />
+      )}
     </div>
   )
 }

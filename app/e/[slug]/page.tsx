@@ -1,6 +1,23 @@
 import { notFound } from 'next/navigation'
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import type { Event, GiftItem } from '@/types'
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const supabase = await createClient()
+  const { data: event } = await supabase
+    .from('events')
+    .select('title, description')
+    .eq('slug', slug)
+    .eq('is_public', true)
+    .single()
+
+  return {
+    title: event ? `${event.title} — Ówàmbẹ̀` : 'Ówàmbẹ̀',
+    description: event?.description ?? "You're invited! View the event details and gift registry.",
+  }
+}
 
 export default async function GuestPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params

@@ -22,7 +22,10 @@ export default function NewEventPage() {
   const router = useRouter()
   const [step, setStep] = useState(1)
   const [step1, setStep1] = useState<Step1>({ title: '', description: '', event_date: '', location: '' })
-  const [step2, setStep2] = useState<Step2>({ is_public: true, signals: {} })
+  const [step2, setStep2] = useState<Step2>({
+    is_public: true,
+    signals: { alice_calibrated: false, alice_budget_generated: false },
+  })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 

@@ -15,6 +15,9 @@ export type Database = {
           signals: Json
           owner_id: string
           stripe_account_id: string | null
+          alice_unlocked: boolean
+          alice_paid_at: string | null
+          alice_payment_ref: string | null
           created_at: string
           updated_at: string
         }
@@ -29,6 +32,9 @@ export type Database = {
           signals?: Json
           owner_id: string
           stripe_account_id?: string | null
+          alice_unlocked?: boolean
+          alice_paid_at?: string | null
+          alice_payment_ref?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -43,6 +49,9 @@ export type Database = {
           signals?: Json
           owner_id?: string
           stripe_account_id?: string | null
+          alice_unlocked?: boolean
+          alice_paid_at?: string | null
+          alice_payment_ref?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -88,6 +97,7 @@ export type Database = {
           contributor_email: string
           message: string | null
           stripe_payment_intent_id: string
+          paystack_reference: string | null
           status: string
           created_at: string
         }
@@ -100,6 +110,7 @@ export type Database = {
           contributor_email: string
           message?: string | null
           stripe_payment_intent_id: string
+          paystack_reference?: string | null
           status?: string
           created_at?: string
         }
@@ -112,6 +123,7 @@ export type Database = {
           contributor_email?: string
           message?: string | null
           stripe_payment_intent_id?: string
+          paystack_reference?: string | null
           status?: string
           created_at?: string
         }
@@ -210,9 +222,224 @@ export type Database = {
         }
         Relationships: []
       }
+      event_context: {
+        Row: {
+          id: string
+          event_id: string
+          guest_count: number
+          style_tier: string
+          location_type: string
+          hero_element: string
+          budget_ceiling: number | null
+          event_month: number | null
+          event_dow: number | null
+          raw_notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          guest_count?: number
+          style_tier?: string
+          location_type?: string
+          hero_element?: string
+          budget_ceiling?: number | null
+          event_month?: number | null
+          event_dow?: number | null
+          raw_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          guest_count?: number
+          style_tier?: string
+          location_type?: string
+          hero_element?: string
+          budget_ceiling?: number | null
+          event_month?: number | null
+          event_dow?: number | null
+          raw_notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      event_facets: {
+        Row: {
+          id: string
+          event_id: string
+          context_id: string | null
+          raw_total: number | null
+          final_total: number | null
+          demand_multiplier: number | null
+          allocations: Json
+          generated_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          context_id?: string | null
+          raw_total?: number | null
+          final_total?: number | null
+          demand_multiplier?: number | null
+          allocations?: Json
+          generated_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          context_id?: string | null
+          raw_total?: number | null
+          final_total?: number | null
+          demand_multiplier?: number | null
+          allocations?: Json
+          generated_at?: string
+        }
+        Relationships: []
+      }
+      alice_alerts: {
+        Row: {
+          id: string
+          event_id: string
+          alert_type: string
+          severity: string
+          message: string
+          resolved: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          alert_type: string
+          severity?: string
+          message: string
+          resolved?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          alert_type?: string
+          severity?: string
+          message?: string
+          resolved?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      alice_decisions: {
+        Row: {
+          id: string
+          event_id: string
+          decision_type: string
+          payload: Json
+          accepted: boolean | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          decision_type: string
+          payload?: Json
+          accepted?: boolean | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          decision_type?: string
+          payload?: Json
+          accepted?: boolean | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      system_events: {
+        Row: {
+          id: string
+          event_id: string | null
+          user_id: string | null
+          event_type: string
+          payload: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id?: string | null
+          user_id?: string | null
+          event_type: string
+          payload?: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string | null
+          user_id?: string | null
+          event_type?: string
+          payload?: Json
+          created_at?: string
+        }
+        Relationships: []
+      }
+      vendor_invites: {
+        Row: {
+          id: string
+          event_id: string
+          vendor_id: string | null
+          email: string
+          name: string | null
+          status: string
+          token: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          vendor_id?: string | null
+          email: string
+          name?: string | null
+          status?: string
+          token?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          vendor_id?: string | null
+          email?: string
+          name?: string | null
+          status?: string
+          token?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: { [_ in never]: never }
-    Functions: { [_ in never]: never }
+    Functions: {
+      calculate_alice_budget: {
+        Args: {
+          p_guest_count: number
+          p_style_tier: string
+          p_location_type: string
+          p_budget_ceiling?: number | null
+          p_event_month?: number | null
+          p_event_dow?: number | null
+        }
+        Returns: Json
+      }
+      get_facet_allocations: {
+        Args: { p_style_tier: string; p_hero_element?: string }
+        Returns: Json
+      }
+      update_event_signal: {
+        Args: { p_event_id: string; p_signal: string; p_value: boolean }
+        Returns: undefined
+      }
+    }
     Enums: { [_ in never]: never }
     CompositeTypes: { [_ in never]: never }
   }
