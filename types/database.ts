@@ -565,6 +565,93 @@ export type Database = {
         }
         Relationships: []
       }
+      venues: {
+        Row: {
+          id: string
+          event_id: string
+          name: string
+          address: string | null
+          capacity: number | null
+          contact: string | null
+          cost_kobo: number | null
+          power_grid: boolean
+          gen1_kva: number | null
+          gen2_kva: number | null
+          fuel_litres: number | null
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          name: string
+          address?: string | null
+          capacity?: number | null
+          contact?: string | null
+          cost_kobo?: number | null
+          power_grid?: boolean
+          gen1_kva?: number | null
+          gen2_kva?: number | null
+          fuel_litres?: number | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          name?: string
+          address?: string | null
+          capacity?: number | null
+          contact?: string | null
+          cost_kobo?: number | null
+          power_grid?: boolean
+          gen1_kva?: number | null
+          gen2_kva?: number | null
+          fuel_litres?: number | null
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      timeline_items: {
+        Row: {
+          id: string
+          event_id: string
+          scheduled_time: string
+          title: string
+          responsible: string | null
+          status: string
+          notes: string | null
+          sort_order: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          scheduled_time: string
+          title: string
+          responsible?: string | null
+          status?: string
+          notes?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          scheduled_time?: string
+          title?: string
+          responsible?: string | null
+          status?: string
+          notes?: string | null
+          sort_order?: number
+          created_at?: string
+        }
+        Relationships: []
+      }
       guest_experience_scores: {
         Row: {
           id: string

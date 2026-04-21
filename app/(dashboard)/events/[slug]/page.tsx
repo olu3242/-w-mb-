@@ -10,6 +10,8 @@ const TABS = [
   { href: '/tasks', label: 'Tasks', signal: 'has_tasks' },
   { href: '/budget', label: 'Budget', signal: 'has_budget_profile' },
   { href: '/vendors', label: 'Vendors', signal: 'has_vendors' },
+  { href: '/venue', label: 'Venue', signal: 'has_venue' },
+  { href: '/timeline', label: 'Timeline', signal: 'has_timeline' },
   { href: '/alice', label: '🧠 ALICE', aliceOnly: true },
 ]
 
