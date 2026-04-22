@@ -286,6 +286,10 @@ export type Database = {
           demand_multiplier: number | null
           allocations: Json
           ave_data: Json
+          amount_paid: number
+          balance_due: number
+          payment_status: string
+          actual_quotes: Json
           generated_at: string
         }
         Insert: {
@@ -297,6 +301,10 @@ export type Database = {
           demand_multiplier?: number | null
           allocations?: Json
           ave_data?: Json
+          amount_paid?: number
+          balance_due?: number
+          payment_status?: string
+          actual_quotes?: Json
           generated_at?: string
         }
         Update: {
@@ -308,6 +316,10 @@ export type Database = {
           demand_multiplier?: number | null
           allocations?: Json
           ave_data?: Json
+          amount_paid?: number
+          balance_due?: number
+          payment_status?: string
+          actual_quotes?: Json
           generated_at?: string
         }
         Relationships: []
@@ -405,6 +417,8 @@ export type Database = {
           name: string | null
           status: string
           token: string
+          expires_at: string | null
+          accepted_at: string | null
           created_at: string
         }
         Insert: {
@@ -415,6 +429,8 @@ export type Database = {
           name?: string | null
           status?: string
           token?: string
+          expires_at?: string | null
+          accepted_at?: string | null
           created_at?: string
         }
         Update: {
@@ -425,6 +441,77 @@ export type Database = {
           name?: string | null
           status?: string
           token?: string
+          expires_at?: string | null
+          accepted_at?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          id: string
+          event_id: string
+          vendor_id: string | null
+          amount: number
+          provider: string
+          reference: string
+          status: string
+          verified: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          vendor_id?: string | null
+          amount: number
+          provider: string
+          reference: string
+          status?: string
+          verified?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          vendor_id?: string | null
+          amount?: number
+          provider?: string
+          reference?: string
+          status?: string
+          verified?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      event_vendors: {
+        Row: {
+          id: string
+          event_id: string
+          vendor_id: string
+          invite_id: string | null
+          facet_name: string
+          quote_amount: number | null
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          vendor_id: string
+          invite_id?: string | null
+          facet_name: string
+          quote_amount?: number | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          vendor_id?: string
+          invite_id?: string | null
+          facet_name?: string
+          quote_amount?: number | null
+          status?: string
           created_at?: string
         }
         Relationships: []

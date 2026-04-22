@@ -1,0 +1,35 @@
+import type { SupabaseClient } from '@supabase/supabase-js'
+import type { Database } from '@/types/database'
+
+export async function recalcEventFacets(
+  supabase: SupabaseClient<Database>,
+  eventId: string
+) {
+  const [{ data: facets }, { data: payments }, { data: quotes }] = await Promise.all([
+    supabase.from('event_facets').select('final_total').eq('event_id', eventId).single(),
+    supabase.from('payments').select('amount').eq('event_id', eventId).eq('status', 'verified'),
+    supabase.from('event_vendors').select('facet_name, quote_amount').eq('event_id', eventId).not('quote_amount', 'is', null),
+  ])
+
+  if (!facets?.final_total) return
+
+  const total = Number(facets.final_total)
+  const amountPaid = payments?.reduce((s, p) => s + Number(p.amount), 0) ?? 0
+  const balanceDue = Math.max(0, total - amountPaid)
+  const paymentStatus =
+    amountPaid === 0 ? 'unpaid' : amountPaid >= total ? 'paid' : 'partial'
+
+  const actualQuotes: Record<string, number> = {}
+  for (const q of quotes ?? []) {
+    if (q.quote_amount != null) {
+      actualQuotes[q.facet_name] = (actualQuotes[q.facet_name] ?? 0) + Number(q.quote_amount)
+    }
+  }
+
+  await supabase.from('event_facets').update({
+    amount_paid: amountPaid,
+    balance_due: balanceDue,
+    payment_status: paymentStatus,
+    actual_quotes: actualQuotes,
+  }).eq('event_id', eventId)
+}
