@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
-import { addBudgetLine, deleteBudgetLine } from '@/app/actions/budget'
+import { addBudgetLine, updateActual, deleteBudgetLine } from '@/app/actions/budget'
 import { Button } from '@/components/ui/button'
 import { formatCurrency } from '@/lib/utils'
 
@@ -54,7 +54,22 @@ export default async function BudgetPage({ params }: { params: Promise<{ slug: s
                   <td className="p-4 text-foreground/60">{l.category}</td>
                   <td className="p-4">{l.label}</td>
                   <td className="p-4 text-right">{formatCurrency(l.estimated)}</td>
-                  <td className="p-4 text-right text-sage">{l.actual ? formatCurrency(l.actual) : '—'}</td>
+                  <td className="p-4 text-right">
+                    <form action={updateActual} className="flex items-center justify-end gap-1">
+                      <input type="hidden" name="id" value={l.id} />
+                      <input type="hidden" name="slug" value={slug} />
+                      <input
+                        name="actual"
+                        type="number"
+                        min="0"
+                        step="0.01"
+                        defaultValue={l.actual ? (l.actual / 100).toFixed(2) : ''}
+                        placeholder="0.00"
+                        className="w-24 rounded border border-white/10 bg-white/5 px-2 py-1 text-right text-sm text-sage outline-none focus:border-sage/60"
+                      />
+                      <button type="submit" className="text-xs text-foreground/20 hover:text-sage transition-colors">✓</button>
+                    </form>
+                  </td>
                   <td className="p-4 text-right">
                     <form action={deleteBudgetLine.bind(null, l.id, slug)}>
                       <button type="submit" className="text-xs text-foreground/30 hover:text-red-400 transition-colors">remove</button>
