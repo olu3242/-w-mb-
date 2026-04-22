@@ -12,6 +12,7 @@ const TABS = [
   { href: '/vendors', label: 'Vendors', signal: 'has_vendors' },
   { href: '/venue', label: 'Venue', signal: 'has_venue' },
   { href: '/timeline', label: 'Timeline', signal: 'has_timeline' },
+  { href: '/escrow', label: 'Escrow' },
   { href: '/alice', label: '🧠 ALICE', aliceOnly: true },
 ]
 

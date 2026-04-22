@@ -168,6 +168,7 @@ export type Database = {
           contact: string | null
           cost: number | null
           status: string
+          paystack_recipient_code: string | null
           created_at: string
         }
         Insert: {
@@ -178,6 +179,7 @@ export type Database = {
           contact?: string | null
           cost?: number | null
           status?: string
+          paystack_recipient_code?: string | null
           created_at?: string
         }
         Update: {
@@ -188,6 +190,7 @@ export type Database = {
           contact?: string | null
           cost?: number | null
           status?: string
+          paystack_recipient_code?: string | null
           created_at?: string
         }
         Relationships: []
@@ -286,6 +289,10 @@ export type Database = {
           demand_multiplier: number | null
           allocations: Json
           ave_data: Json
+          amount_paid: number
+          balance_due: number
+          payment_status: string
+          actual_quotes: Json
           generated_at: string
         }
         Insert: {
@@ -297,6 +304,10 @@ export type Database = {
           demand_multiplier?: number | null
           allocations?: Json
           ave_data?: Json
+          amount_paid?: number
+          balance_due?: number
+          payment_status?: string
+          actual_quotes?: Json
           generated_at?: string
         }
         Update: {
@@ -308,6 +319,10 @@ export type Database = {
           demand_multiplier?: number | null
           allocations?: Json
           ave_data?: Json
+          amount_paid?: number
+          balance_due?: number
+          payment_status?: string
+          actual_quotes?: Json
           generated_at?: string
         }
         Relationships: []
@@ -405,6 +420,8 @@ export type Database = {
           name: string | null
           status: string
           token: string
+          expires_at: string | null
+          accepted_at: string | null
           created_at: string
         }
         Insert: {
@@ -415,6 +432,8 @@ export type Database = {
           name?: string | null
           status?: string
           token?: string
+          expires_at?: string | null
+          accepted_at?: string | null
           created_at?: string
         }
         Update: {
@@ -425,6 +444,252 @@ export type Database = {
           name?: string | null
           status?: string
           token?: string
+          expires_at?: string | null
+          accepted_at?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      escrow_accounts: {
+        Row: {
+          id: string
+          event_id: string
+          balance: number
+          total_contributed: number
+          total_allocated: number
+          total_released: number
+          status: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          balance?: number
+          total_contributed?: number
+          total_allocated?: number
+          total_released?: number
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          balance?: number
+          total_contributed?: number
+          total_allocated?: number
+          total_released?: number
+          status?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      escrow_transactions: {
+        Row: {
+          id: string
+          escrow_account_id: string
+          event_id: string
+          type: string
+          amount: number
+          balance_after: number
+          available_after: number
+          reference: string | null
+          payment_id: string | null
+          allocation_id: string | null
+          payout_id: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          escrow_account_id: string
+          event_id: string
+          type: string
+          amount: number
+          balance_after: number
+          available_after: number
+          reference?: string | null
+          payment_id?: string | null
+          allocation_id?: string | null
+          payout_id?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: { [key: string]: never }
+        Relationships: []
+      }
+      vendor_allocations: {
+        Row: {
+          id: string
+          event_id: string
+          escrow_account_id: string
+          vendor_id: string
+          event_vendor_id: string | null
+          facet_name: string
+          amount: number
+          status: string
+          approved_at: string | null
+          released_at: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          escrow_account_id: string
+          vendor_id: string
+          event_vendor_id?: string | null
+          facet_name: string
+          amount: number
+          status?: string
+          approved_at?: string | null
+          released_at?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          escrow_account_id?: string
+          vendor_id?: string
+          event_vendor_id?: string | null
+          facet_name?: string
+          amount?: number
+          status?: string
+          approved_at?: string | null
+          released_at?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      vendor_payouts: {
+        Row: {
+          id: string
+          event_id: string
+          allocation_id: string
+          vendor_id: string
+          amount: number
+          provider: string
+          provider_reference: string | null
+          recipient_code: string | null
+          bank_name: string | null
+          account_number: string | null
+          account_name: string | null
+          status: string
+          failure_reason: string | null
+          notes: string | null
+          initiated_at: string
+          completed_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          allocation_id: string
+          vendor_id: string
+          amount: number
+          provider?: string
+          provider_reference?: string | null
+          recipient_code?: string | null
+          bank_name?: string | null
+          account_number?: string | null
+          account_name?: string | null
+          status?: string
+          failure_reason?: string | null
+          notes?: string | null
+          initiated_at?: string
+          completed_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          allocation_id?: string
+          vendor_id?: string
+          amount?: number
+          provider?: string
+          provider_reference?: string | null
+          recipient_code?: string | null
+          bank_name?: string | null
+          account_number?: string | null
+          account_name?: string | null
+          status?: string
+          failure_reason?: string | null
+          notes?: string | null
+          initiated_at?: string
+          completed_at?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          id: string
+          event_id: string
+          vendor_id: string | null
+          amount: number
+          provider: string
+          reference: string
+          status: string
+          verified: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          vendor_id?: string | null
+          amount: number
+          provider: string
+          reference: string
+          status?: string
+          verified?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          vendor_id?: string | null
+          amount?: number
+          provider?: string
+          reference?: string
+          status?: string
+          verified?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      event_vendors: {
+        Row: {
+          id: string
+          event_id: string
+          vendor_id: string
+          invite_id: string | null
+          facet_name: string
+          quote_amount: number | null
+          status: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          event_id: string
+          vendor_id: string
+          invite_id?: string | null
+          facet_name: string
+          quote_amount?: number | null
+          status?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          event_id?: string
+          vendor_id?: string
+          invite_id?: string | null
+          facet_name?: string
+          quote_amount?: number | null
+          status?: string
           created_at?: string
         }
         Relationships: []
@@ -709,6 +974,30 @@ export type Database = {
       update_event_signal: {
         Args: { p_event_id: string; p_signal: string; p_value: boolean }
         Returns: undefined
+      }
+      credit_escrow: {
+        Args: { p_event_id: string; p_amount: number; p_reference: string; p_payment_id?: string | null }
+        Returns: Json
+      }
+      allocate_escrow: {
+        Args: { p_event_id: string; p_vendor_id: string; p_amount: number; p_facet_name: string; p_event_vendor_id?: string | null; p_notes?: string | null }
+        Returns: Json
+      }
+      cancel_allocation: {
+        Args: { p_allocation_id: string }
+        Returns: Json
+      }
+      approve_allocation: {
+        Args: { p_allocation_id: string }
+        Returns: Json
+      }
+      complete_payout: {
+        Args: { p_payout_id: string; p_provider_reference?: string | null }
+        Returns: Json
+      }
+      escrow_consistency_check: {
+        Args: { p_event_id: string }
+        Returns: Json
       }
     }
     Enums: { [_ in never]: never }

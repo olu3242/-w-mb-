@@ -4,6 +4,26 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 
+export async function sendVendorInvite(
+  eventId: string,
+  slug: string,
+  email: string,
+  name: string,
+  facetName: string,
+  daysValid = 7
+) {
+  const supabase = await createClient()
+  const expiresAt = new Date(Date.now() + daysValid * 86400000).toISOString()
+  await supabase.from('vendor_invites').insert({
+    event_id: eventId,
+    email,
+    name: name || null,
+    status: 'pending',
+    expires_at: expiresAt,
+  })
+  revalidatePath(`/events/${slug}/vendors`)
+}
+
 const VendorSchema = z.object({
   event_id: z.string().uuid(),
   name: z.string().min(1).max(120),

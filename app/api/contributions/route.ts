@@ -1,9 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
-import { stripe } from '@/lib/stripe/client'
+import { getStripeServer } from '@/lib/stripe/client'
 import { ContributionSchema } from '@/lib/validations'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
+  const stripe = getStripeServer()
   const body = await request.json()
   const parsed = ContributionSchema.safeParse(body)
   if (!parsed.success) return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 })

@@ -27,9 +27,13 @@ export async function addBudgetLine(formData: FormData) {
   revalidatePath(`/events/${formData.get('slug')}/budget`)
 }
 
-export async function updateActual(id: string, actual: number, slug: string) {
+export async function updateActual(formData: FormData) {
+  const id = formData.get('id') as string
+  const slug = formData.get('slug') as string
+  const raw = Number(formData.get('actual'))
+  if (!id || !slug || isNaN(raw)) return
   const supabase = await createClient()
-  await supabase.from('budget_lines').update({ actual: actual * 100 }).eq('id', id)
+  await supabase.from('budget_lines').update({ actual: Math.round(raw * 100) }).eq('id', id)
   revalidatePath(`/events/${slug}/budget`)
 }
 
