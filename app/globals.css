@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@700;800&family=Playfair+Display:ital,wght@1,900&display=swap');
 
 :root {
   --void: #080808;
@@ -17,9 +17,15 @@
   --color-ocean: var(--ocean);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-lemon: #FACC15;
+  --color-forest: #065F46;
+  --color-coral: #FF7F50;
+  --color-charcoal: #1A1A1A;
+  --color-offwhite: #F9F7F2;
   --font-display: 'Syne', sans-serif;
   --font-sans: 'Instrument Sans', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --font-serif: 'Playfair Display', Georgia, serif;
 }
 
 * { box-sizing: border-box; }
@@ -29,4 +35,56 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+/* Landing page utilities */
+.hero-text {
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+}
+
+.system-border {
+  border: 1px solid #1A1A1A;
+}
+
+.ui-overlay-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid #1A1A1A;
+  box-shadow: 10px 10px 0px #1A1A1A;
+}
+
+.scene-container {
+  position: relative;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.scene-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(1.2) contrast(1.1);
+  z-index: -1;
+}
+
+.scene-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(26, 26, 26, 0.8) 0%, transparent 60%);
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .scene-overlay {
+    background: linear-gradient(to top, rgba(26, 26, 26, 0.9) 0%, transparent 100%);
+  }
+  .scene-container {
+    align-items: flex-end;
+    padding-bottom: 4rem;
+  }
 }
