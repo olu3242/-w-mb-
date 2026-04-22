@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { verifyTransaction } from '@/lib/paystack/client'
-import { stripe } from '@/lib/stripe/client'
+import { getStripeServer } from '@/lib/stripe/client'
 import { recalcEventFacets } from '@/lib/facets'
 
 export async function POST(req: NextRequest) {
+  const stripe = getStripeServer()
   const { reference, provider, event_id } = await req.json() as {
     reference: string
     provider: 'paystack' | 'stripe'
