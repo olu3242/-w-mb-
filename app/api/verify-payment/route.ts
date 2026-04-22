@@ -17,9 +17,6 @@ export async function POST(req: NextRequest) {
   }
 
   const supabase = await createClient()
-  const admin = createAdminClient()
-
-  // Auth check — caller must own the event
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
@@ -27,7 +24,9 @@ export async function POST(req: NextRequest) {
     .from('events').select('id').eq('id', event_id).eq('owner_id', user.id).single()
   if (!event) return NextResponse.json({ error: 'Event not found' }, { status: 404 })
 
-  // Idempotency: return early if already verified
+  const admin = createAdminClient()
+
+  // Idempotency — return early if already verified
   const { data: existing } = await admin
     .from('payments').select('id, status, amount').eq('reference', reference).single()
 
@@ -35,7 +34,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ status: 'verified', amount: existing.amount, cached: true })
   }
 
-  // Verify with provider
   let success = false
   let amountNgn = 0
 
@@ -54,21 +52,32 @@ export async function POST(req: NextRequest) {
   }
 
   const status = success ? 'verified' : 'failed'
+  let paymentId: string | null = null
 
   if (existing) {
     await admin.from('payments').update({ status, verified: success, amount: amountNgn }).eq('id', existing.id)
+    paymentId = existing.id
   } else {
-    await admin.from('payments').insert({
+    const { data: inserted } = await admin.from('payments').insert({
       event_id,
       reference,
       provider,
       amount: amountNgn,
       status,
       verified: success,
-    })
+    }).select('id').single()
+    paymentId = inserted?.id ?? null
   }
 
-  if (success) {
+  if (success && paymentId) {
+    // Credit escrow atomically via RPC (idempotent on reference)
+    await admin.rpc('credit_escrow', {
+      p_event_id: event_id,
+      p_amount: amountNgn,
+      p_reference: reference,
+      p_payment_id: paymentId,
+    })
+
     await recalcEventFacets(admin, event_id)
   }
 

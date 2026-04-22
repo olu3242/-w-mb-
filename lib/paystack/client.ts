@@ -31,6 +31,64 @@ export async function initializeTransaction(payload: {
   }>
 }
 
+export async function createTransferRecipient(params: {
+  name: string
+  accountNumber: string
+  bankCode: string
+}) {
+  const res = await fetch(`${BASE}/transferrecipient`, {
+    method: 'POST',
+    headers: headers(),
+    body: JSON.stringify({
+      type: 'nuban',
+      name: params.name,
+      account_number: params.accountNumber,
+      bank_code: params.bankCode,
+      currency: 'NGN',
+    }),
+  })
+  return res.json() as Promise<{
+    status: boolean
+    message: string
+    data: { recipient_code: string; id: number }
+  }>
+}
+
+export async function initiateTransfer(params: {
+  amountNgn: number
+  recipientCode: string
+  reason?: string
+  reference?: string
+}) {
+  const res = await fetch(`${BASE}/transfer`, {
+    method: 'POST',
+    headers: headers(),
+    body: JSON.stringify({
+      source: 'balance',
+      amount: Math.round(params.amountNgn * 100),
+      recipient: params.recipientCode,
+      reason: params.reason ?? 'Vendor payment — Ówàmbẹ̀',
+      reference: params.reference,
+    }),
+  })
+  return res.json() as Promise<{
+    status: boolean
+    message: string
+    data: { transfer_code: string; status: string; amount: number }
+  }>
+}
+
+export async function verifyTransfer(transferCode: string) {
+  const res = await fetch(`${BASE}/transfer/${transferCode}`, {
+    headers: headers(),
+    next: { revalidate: 0 },
+  })
+  return res.json() as Promise<{
+    status: boolean
+    data: { status: string; transfer_code: string; amount: number }
+  }>
+}
+
 export async function verifyTransaction(reference: string): Promise<{
   success: boolean
   amountNgn: number
