@@ -16,24 +16,49 @@
   --color-ocean: var(--ocean);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-lemon: #FACC15;
-  --color-forest: #065F46;
-  --color-coral: #FF7F50;
-  --color-charcoal: #1A1A1A;
-  --color-offwhite: #F9F7F2;
-  --font-display: 'Syne', sans-serif;
-  --font-sans: 'Instrument Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-serif: 'Playfair Display', Georgia, serif;
+  --color-lemon: #facc15;
+  --color-forest: #065f46;
+  --color-coral: #ff7f50;
+  --color-charcoal: #1a1a1a;
+  --color-offwhite: #f9f7f2;
+  --font-display: "Syne", sans-serif;
+  --font-sans: "Instrument Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-serif: "Playfair Display", Georgia, serif;
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
-body {
+html,
+body,
+:root {
+  height: 100%;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  scrollbar-width: none;
+  -webkit-scrollbar-width: none;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Ubuntu,
+    Cantarell,
+    sans-serif;
+}
+
+.hidden-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidden-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Landing page utilities */
@@ -43,14 +68,14 @@ body {
 }
 
 .system-border {
-  border: 1px solid #1A1A1A;
+  border: 1px solid #1a1a1a;
 }
 
 .ui-overlay-card {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border: 1px solid #1A1A1A;
-  box-shadow: 10px 10px 0px #1A1A1A;
+  border: 1px solid #1a1a1a;
+  box-shadow: 10px 10px 0px #1a1a1a;
 }
 
 .scene-container {
@@ -74,13 +99,21 @@ body {
 .scene-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(26, 26, 26, 0.8) 0%, transparent 60%);
+  background: linear-gradient(
+    to right,
+    rgba(26, 26, 26, 0.8) 0%,
+    transparent 60%
+  );
   z-index: 0;
 }
 
 @media (max-width: 768px) {
   .scene-overlay {
-    background: linear-gradient(to top, rgba(26, 26, 26, 0.9) 0%, transparent 100%);
+    background: linear-gradient(
+      to top,
+      rgba(26, 26, 26, 0.9) 0%,
+      transparent 100%
+    );
   }
   .scene-container {
     align-items: flex-end;
