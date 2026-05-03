@@ -1,80 +1,3 @@
-// ─── components/owambe/Footer.tsx ───────────────────────────
-// import Link from "next/link";
-
-// const modules = [
-//   { label: "Aso-Ebi Tracker", href: "#" },
-//   { label: "Vendor Sync", href: "#" },
-//   { label: "Digital Spray", href: "#" },
-// ];
-
-// const connect = [
-//   { label: "Instagram", href: "#" },
-//   { label: "WhatsApp", href: "#" },
-// ];
-
-// export default function Footer() {
-//   return (
-//     <footer className="p-10 md:p-20 bg-[#1A1A1A] text-[#F9F7F2]/40 border-t border-white/10">
-//       <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-//         <div className="col-span-2">
-//           <span className="font-serif italic font-black text-5xl text-[#F9F7F2]">
-//             Owambe.
-//           </span>
-//           <p className="mt-8 text-sm font-bold max-w-xs leading-relaxed">
-//             Designed for the hosts who believe that celebration is a sacred
-//             tradition that deserves precise coordination.
-//           </p>
-//         </div>
-
-//         <div className="space-y-6">
-//           <h5 className="text-[#F9F7F2] font-black text-xs uppercase tracking-widest">
-//             Modules
-//           </h5>
-//           <ul className="text-xs font-black uppercase tracking-widest space-y-3">
-//             {modules.map((m) => (
-//               <li key={m.label}>
-//                 <Link
-//                   href={m.href}
-//                   className="hover:text-[#FACC15] transition-colors"
-//                 >
-//                   {m.label}
-//                 </Link>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-
-//         <div className="space-y-6">
-//           <h5 className="text-[#F9F7F2] font-black text-xs uppercase tracking-widest">
-//             Connect
-//           </h5>
-//           <ul className="text-xs font-black uppercase tracking-widest space-y-3">
-//             {connect.map((c) => (
-//               <li key={c.label}>
-//                 <Link
-//                   href={c.href}
-//                   className="hover:text-[#FF7F50] transition-colors"
-//                 >
-//                   {c.label}
-//                 </Link>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//       </div>
-
-//       <div className="mt-16 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-//         <p className="text-[10px] font-black uppercase tracking-widest">
-//           © {new Date().getFullYear()} Owambe. All rights reserved.
-//         </p>
-//         <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-30">
-//           Redefining celebration for the modern world.
-//         </p>
-//       </div>
-//     </footer>
-//   );
-// }
-
 "use client";
 
 import Link from "next/link";
@@ -95,7 +18,7 @@ const connect = [
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#F9F7F2] pt-32 pb-12 px-6 md:px-12 border-t border-zinc-200 overflow-hidden font-poppins">
+    <footer className="relative z-[7] bg-[#F9F7F2] pt-32 pb-12 px-6 md:px-12 border-t border-zinc-200 overflow-hidden font-poppins">
       {/* Massive Background Ghost Text */}
       <div className="absolute -bottom-10 left-0 w-full text-center pointer-events-none select-none overflow-hidden">
         <h2 className="text-[25vw] font-black leading-none text-zinc-950/[0.03] tracking-tighter">

@@ -41,7 +41,7 @@ export default function VendorScene() {
           className="w-full h-full object-cover opacity-50"
         />
         {/* Cinematic darkening gradient (Right to Left for this layout) */}
-        <div className="absolute inset-0 bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/90 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-l from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent z-10" />
       </div>
 
       <div className="container mx-auto relative z-20 grid lg:grid-cols-2 gap-16 items-center">
@@ -56,7 +56,7 @@ export default function VendorScene() {
             {/* Glow Aura */}
             <div className="absolute -inset-1 bg-emerald-500/20 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition duration-1000" />
 
-            <div className="relative bg-zinc-950/60 backdrop-blur-3xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl">
+            <div className="relative bg-zinc-950/60 backdrop-blur-3xl border border-emerald-200 p-8 rounded-[2.5rem] shadow-2xl">
               <div className="flex items-center gap-5 mb-10">
                 <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
                   <UtensilsCrossed className="text-emerald-400" size={28} />

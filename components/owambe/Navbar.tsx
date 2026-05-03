@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,16 +25,16 @@ export default function Navbar() {
       <nav
         className={`fixed top-0 left-0 w-full z-[100] font-poppins transition-all duration-500 ${
           isScrolled
-            ? "py-4 bg-white/90 backdrop-blur-xl"
+            ? "py-4 bg-emerald-600 backdrop-blur-xl"
             : "py-8 bg-transparent"
         }`}
       >
-        <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
+        <div className="w-full mx-auto px-6 md:px-12 flex justify-between items-center">
           {/* Logo */}
           <Link href="/" className="relative z-[110]">
             <span
               className={`font-serif italic font-black text-3xl tracking-tighter transition-colors duration-500 ${
-                isScrolled ? "text-zinc-950" : "text-white mix-blend-difference"
+                isScrolled ? "text-white" : "text-white mix-blend-difference"
               }`}
             >
               Owambe.
@@ -44,19 +45,38 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-10">
             <a
               href="#scenes"
-              className={`text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:opacity-50 ${
-                isScrolled ? "text-zinc-900" : "text-white"
+              className={`text-[14px] font-black tracking-[0.2em] transition-all hover:text-green-500 ${
+                isScrolled ? "text-white" : "text-white"
               }`}
             >
               The Scenes
             </a>
 
             <Link href="/signup">
-              <button className="group flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-[11px] font-black uppercase tracking-widest transition-all active:scale-95">
+              {/* <button className="group flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-full text-[14px] font-black tracking-widest transition-all active:scale-95">
                 Start Planning
                 <ArrowUpRight
                   size={14}
                   className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                />
+              </button> */}
+              <button className="group relative flex items-center gap-2 text-white px-8 py-4 rounded-full text-[14px] font-black tracking-widest transition-all active:scale-95 overflow-hidden hover:shadow-lg hover:shadow-green-900/40">
+                {/* Background image */}
+                <Image
+                  src={"/ankar.png"}
+                  alt=""
+                  fill
+                  sizes="300px"
+                  className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+                />
+                {/* Green tint overlay */}
+                <div className="absolute inset-0 bg-slate-900/50 group-hover:bg-green-900/20 transition-colors duration-300" />
+
+                {/* Button content */}
+                <span className="relative z-10">Start Planning</span>
+                <ArrowUpRight
+                  size={14}
+                  className="relative z-10 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
                 />
               </button>
             </Link>
@@ -121,14 +141,14 @@ export default function Navbar() {
               <a
                 href="#scenes"
                 onClick={() => setIsSidebarOpen(false)}
-                className="text-3xl font-black uppercase tracking-tighter text-zinc-900 hover:text-green-600 transition-colors"
+                className="text-3xl font-black tracking-tighter text-zinc-900 hover:text-green-600 transition-colors"
               >
                 The Scenes
               </a>
               <Link
                 href="/signup"
                 onClick={() => setIsSidebarOpen(false)}
-                className="text-3xl font-black uppercase tracking-tighter text-zinc-900 hover:text-green-600 transition-colors"
+                className="text-3xl font-black tracking-tighter text-zinc-900 hover:text-green-600 transition-colors"
               >
                 Start Planning
               </Link>

@@ -262,7 +262,7 @@ export default function DigitalSprayingScene() {
             {/* Ambient Glow */}
             <div className="absolute -inset-4 bg-emerald-400/20 rounded-[3rem] blur-3xl opacity-0 group-hover:opacity-100 transition duration-1000" />
 
-            <div className="relative bg-zinc-950/40 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl">
+            <div className="relative bg-zinc-950/40 backdrop-blur-3xl border border-emerald-400 p-8 rounded-md overflow-hidden shadow-2xl">
               {/* Header */}
               <div className="p-6 md:p-8 border-b border-white/5 bg-white/5 flex justify-between items-center">
                 <div className="flex items-center gap-3">

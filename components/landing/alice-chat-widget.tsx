@@ -366,7 +366,7 @@ export default function AliceChatWidget() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-                  placeholder="Sync with Alice..."
+                  placeholder="Talk to Alice..."
                   className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-6 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-emerald-500/40 focus:bg-white/10 transition-all shadow-inner"
                 />
                 <button
@@ -392,9 +392,9 @@ export default function AliceChatWidget() {
             onClick={() => setOpen(true)}
             whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
-            className="relative w-20 h-20 bg-emerald-500 rounded-[2rem] flex items-center justify-center shadow-[0_15px_40px_rgba(16,185,129,0.4)]"
+            className="relative w-20 h-20 bg-emerald-600 rounded-[2rem] flex items-center justify-center shadow-[0_15px_40px_rgba(16,185,129,0.4)]"
           >
-            <MessageSquare size={30} className="text-zinc-950" />
+            <MessageSquare size={30} className="text-white" />
             {/* Notification Dot */}
             <span className="absolute top-5 right-5 w-3 h-3 bg-white rounded-full border-2 border-emerald-500" />
           </motion.button>
