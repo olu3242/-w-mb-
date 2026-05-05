@@ -227,7 +227,7 @@ export default function HeroScene() {
                   className="object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
                 />
                 {/* Dark overlay to keep text legible */}
-                <div className="absolute inset-0 bg-slate-900/50 group-hover:bg-green-900/20 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-green-900/70 group-hover:bg-green-900/20 transition-colors duration-300" />
 
                 {/* Button content */}
                 <span className="relative z-10">Plan My Owambe</span>

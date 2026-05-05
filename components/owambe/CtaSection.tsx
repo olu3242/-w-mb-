@@ -13,7 +13,7 @@ export default function CtaSection() {
       ref={ref}
       className="py-32 px-6 md:px-12 text-center bg-[#F9F7F2]"
     >
-      <div className="max-w-4xl mx-auto">
+      <div className="mx-auto max-w-[1280px]">
         <motion.h2
           className="font-black uppercase leading-none mb-12 text-7xl md:text-[10vw]"
           style={{ lineHeight: 0.85, letterSpacing: "-0.04em" }}
@@ -38,7 +38,7 @@ export default function CtaSection() {
           </button>
         </motion.div>
 
-        <p className="mt-16 text-[10px] font-black uppercase tracking-[0.5em] opacity-30">
+        <p className="mt-16 text-[12px] font-black uppercase tracking-[0.5em] text-slate-600">
           Redefining celebration for the modern world.
         </p>
       </div>

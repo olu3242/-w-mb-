@@ -103,12 +103,12 @@ export default function VendorScene() {
                         <div className="w-[18px] h-[18px] rounded-full border-2 border-zinc-700" />
                       )}
                       <span
-                        className={`text-[13px] font-bold ${item.status === "pending" ? "text-zinc-500" : "text-zinc-200"}`}
+                        className={`text-[13px] font-bold ${item.status === "pending" ? "text-zinc-300" : "text-zinc-200"}`}
                       >
                         {item.text}
                       </span>
                     </div>
-                    <span className="text-[10px] font-black text-zinc-500 tracking-tighter">
+                    <span className="text-[10px] font-black text-zinc-200 tracking-tighter">
                       {item.time}
                     </span>
                   </div>
@@ -118,12 +118,12 @@ export default function VendorScene() {
               <div className="mt-10 pt-8 border-t border-white/5">
                 <div className="flex justify-between items-end">
                   <div className="space-y-1">
-                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-500">
+                    <p className="text-[9px] font-black uppercase tracking-[0.2em] text-zinc-200">
                       Balance Status
                     </p>
                     <p className="text-white font-bold">
                       ₦850k{" "}
-                      <span className="text-zinc-600 font-medium">/ 1.2M</span>
+                      <span className="text-zinc-300 font-medium">/ 1.2M</span>
                     </p>
                   </div>
                   <div className="h-1 w-24 bg-white/5 rounded-full overflow-hidden">
